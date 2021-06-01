@@ -6,6 +6,10 @@ import xyz.mycast.sagitta.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val TAG = "SGT/MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "649804470610",
+    "project_id": "sagitta-c7d95",
+    "storage_bucket": "sagitta-c7d95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649804470610:android:bfd82f88e74ca9f338428b",
+        "android_client_info": {
+          "package_name": "xyz.mycast.sagitta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "649804470610-arvlcktt3kl1d9sp9hu602niikspe985.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhfJgr7Jmu9sX1LNwSFCiUuD9OA3NY78E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "649804470610-arvlcktt3kl1d9sp9hu602niikspe985.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
