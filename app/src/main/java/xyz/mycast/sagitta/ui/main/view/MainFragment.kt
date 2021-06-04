@@ -27,7 +27,7 @@ open class MainFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
@@ -38,6 +38,7 @@ open class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getMyId().observe(viewLifecycleOwner, { myTokenView.text = it })
         viewModel.getTo().observe(viewLifecycleOwner, { toEditText.setText(it) })
+        viewModel.getBody().observe(viewLifecycleOwner, { messageEdit.setText(it) })
 
         myTokenView = view.findViewById(R.id.my_token_view)
 
@@ -49,15 +50,22 @@ open class MainFragment : Fragment() {
             onTextChanged = { text, _, _, _ -> onToTextChanged(text) })
 
         messageEdit = view.findViewById(R.id.edit_message)
+        messageEdit.addTextChangedListener(
+            onTextChanged = { text, _, _, _ ->
+                onBodyTextChanged(text)
+            }
+        )
         val sendButton: Button = view.findViewById(R.id.button_send)
         sendButton.setOnClickListener { onSendClick() }
     }
 
     override fun onStart() {
         super.onStart()
+        val context = requireContext()
         with(viewModel) {
             loadToken()
-            loadToPref(requireContext())
+            loadToPref(context)
+            loadBodyPref(context)
         }
     }
 
@@ -77,4 +85,7 @@ open class MainFragment : Fragment() {
         viewModel.sendNotificationMessage(requireContext(), to, body)
     }
 
+    private fun onBodyTextChanged(text: CharSequence?) {
+        viewModel.saveBodyPref(requireActivity(), text)
+    }
 }

@@ -16,6 +16,7 @@ class MainViewModel : ViewModel() {
 
     private val myId: MutableLiveData<String> = MutableLiveData("")
     private val to: MutableLiveData<String> = MutableLiveData("")
+    private val body: MutableLiveData<String> = MutableLiveData("")
 
     fun getMyId(): LiveData<String> {
         return myId
@@ -23,6 +24,10 @@ class MainViewModel : ViewModel() {
 
     fun getTo(): LiveData<String> {
         return to
+    }
+
+    fun getBody(): LiveData<String> {
+        return body
     }
 
     fun loadToken() {
@@ -43,6 +48,14 @@ class MainViewModel : ViewModel() {
 
     fun saveToPref(context: Context, text: CharSequence?) {
         PreferenceManager().saveToPref(context, text)
+    }
+
+    fun loadBodyPref(context: Context) {
+        body.value = PreferenceManager().loadBodyPref(context)
+    }
+
+    fun saveBodyPref(context: Context, text: CharSequence?) {
+        PreferenceManager().saveBodyPref(context, text)
     }
 
     fun copyTokenToClipboard(context: Context, token: CharSequence?) {
