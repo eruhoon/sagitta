@@ -5,10 +5,11 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.icu.lang.UCharacter
 import android.util.Log
 import android.widget.RemoteViews
 import xyz.mycast.sagitta.R
+import xyz.mycast.sagitta.ui.main.common.preference.PreferenceManager
+import xyz.mycast.sagitta.ui.main.common.send.MessageSender
 
 
 class SgtAppWidgetProvider : AppWidgetProvider() {
@@ -21,7 +22,7 @@ class SgtAppWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(
         context: Context?,
         appWidgetManager: AppWidgetManager?,
-        appWidgetIds: IntArray?
+        appWidgetIds: IntArray?,
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
@@ -39,8 +40,14 @@ class SgtAppWidgetProvider : AppWidgetProvider() {
         super.onReceive(context, intent)
 
         Log.i(TAG, "onReceive: ${intent?.action}")
-        when(intent?.action) {
-            ACTION_BTN -> Log.i(TAG, "buttonClicked")
+        when (intent?.action) {
+            ACTION_BTN -> context?.let { onButtonClick(it) }
         }
+    }
+
+    private fun onButtonClick(context: Context) {
+        Log.i(TAG, "buttonClicked")
+        val to = PreferenceManager().loadToPref(context)
+        MessageSender().sendNotificationMessage(context, to, "이건 위젯에서 보내는 메시지")
     }
 }

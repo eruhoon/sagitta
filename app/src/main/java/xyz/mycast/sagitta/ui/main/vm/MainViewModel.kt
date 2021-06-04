@@ -1,27 +1,21 @@
 package xyz.mycast.sagitta.ui.main.vm
 
 import android.content.Context
-import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.volley.toolbox.Volley
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import xyz.mycast.sagitta.MainActivity
+import xyz.mycast.sagitta.ui.main.common.preference.PreferenceManager
+import xyz.mycast.sagitta.ui.main.common.send.MessageSender
 import xyz.mycast.sagitta.ui.main.model.ClipboardHelper
-import xyz.mycast.sagitta.ui.main.view.NotificationRequest
 
 class MainViewModel : ViewModel() {
 
     private val myId: MutableLiveData<String> = MutableLiveData("")
     private val to: MutableLiveData<String> = MutableLiveData("")
-
-    companion object {
-        private const val PREF_NAME_CACHE = "xyz.mycast.sagitta.cache"
-        private const val PREF_KEY_TO = "to"
-    }
 
     fun getMyId(): LiveData<String> {
         return myId
@@ -44,25 +38,18 @@ class MainViewModel : ViewModel() {
     }
 
     fun loadToPref(context: Context) {
-        val cachePref = context.getSharedPreferences(PREF_NAME_CACHE, Context.MODE_PRIVATE)
-        to.value = cachePref.getString("to", "")
+        to.value = PreferenceManager().loadToPref(context)
     }
 
     fun saveToPref(context: Context, text: CharSequence?) {
-        val cachePref = context.getSharedPreferences(PREF_NAME_CACHE, Context.MODE_PRIVATE)
-        with(cachePref.edit()) {
-            putString(PREF_KEY_TO, text.toString())
-            apply()
-        }
+        PreferenceManager().saveToPref(context, text)
     }
 
     fun copyTokenToClipboard(context: Context, token: CharSequence?) {
         ClipboardHelper().copyToClipboard(context, token)
     }
 
-    fun sendNotificationMessage(context: Context, to: Editable, body: Editable) {
-        val queue = Volley.newRequestQueue(context)
-        val jsonObjectRequest = NotificationRequest(context, to, body)
-        queue.add(jsonObjectRequest)
+    fun sendNotificationMessage(context: Context, to: String, body: String) {
+        MessageSender().sendNotificationMessage(context, to, body)
     }
 }

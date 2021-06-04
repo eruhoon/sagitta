@@ -72,8 +72,8 @@ open class MainFragment : Fragment() {
     }
 
     private fun onSendClick() {
-        val body = messageEdit.text
-        val to = toEditText.text
+        val body = messageEdit.text.toString()
+        val to = toEditText.text.toString()
         viewModel.sendNotificationMessage(requireContext(), to, body)
     }
 

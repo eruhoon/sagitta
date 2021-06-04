@@ -1,14 +1,13 @@
 package xyz.mycast.sagitta.ui.main.view
 
 import android.content.Context
-import android.text.Editable
 import android.util.Log
 import android.widget.Toast
 import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
 import xyz.mycast.sagitta.BuildConfig
 
-class NotificationRequest(context: Context, to: Editable, body: Editable) : JsonObjectRequest(
+class NotificationRequest(context: Context, to: String, body: String) : JsonObjectRequest(
     URL, getNotification(body, to),
     {
         Log.d(TAG, "success")
@@ -29,7 +28,7 @@ class NotificationRequest(context: Context, to: Editable, body: Editable) : Json
         private const val PARAM_KEY_CONTENT_TYPE = "Content-Type"
         private const val CONTENT_TYPE_APPLICATION_JSON = "application/json"
 
-        private fun getNotification(body: Editable, to: Editable): JSONObject {
+        private fun getNotification(body: String, to: String): JSONObject {
             val notificationBody = JSONObject()
             notificationBody.put("title", "단춍이")
             notificationBody.put("body", body)
