@@ -25,6 +25,7 @@ class MainFragment : Fragment() {
 
     companion object {
         private const val TAG = "SGT/MainFragment"
+        private const val PREF_NAME_CACHE = "xyz.mycast.sagitta.cache"
 
         fun newInstance() = MainFragment()
     }
@@ -69,8 +70,7 @@ class MainFragment : Fragment() {
         toEditText = view.findViewById(R.id.to_edit)
         toEditText.addTextChangedListener(onTextChanged = { text, _, _, _ ->
             val cachePref = requireActivity().getSharedPreferences(
-                "xyz.mycast.sagitta.cache",
-                Context.MODE_PRIVATE
+                PREF_NAME_CACHE, Context.MODE_PRIVATE
             )
             with(cachePref.edit()) {
                 putString("to", text.toString())
