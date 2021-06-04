@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import xyz.mycast.sagitta.MainActivity
+import xyz.mycast.sagitta.ui.main.model.ClipboardHelper
 
 class MainViewModel : ViewModel() {
 
@@ -50,5 +51,9 @@ class MainViewModel : ViewModel() {
             putString(PREF_KEY_TO, text.toString())
             apply()
         }
+    }
+
+    fun copyTokenToClipboard(context: Context, token: CharSequence?) {
+        ClipboardHelper().copyToClipboard(context, token)
     }
 }

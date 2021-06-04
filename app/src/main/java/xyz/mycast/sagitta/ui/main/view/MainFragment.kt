@@ -1,8 +1,5 @@
 package xyz.mycast.sagitta.ui.main.view
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,12 +36,8 @@ open class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getMyId().observe(this, {
-            myTokenView.text = it
-        })
-        viewModel.getTo().observe(this, {
-            toEditText.setText(it)
-        })
+        viewModel.getMyId().observe(this, { myTokenView.text = it })
+        viewModel.getTo().observe(this, { toEditText.setText(it) })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,10 +59,7 @@ open class MainFragment : Fragment() {
 
     private fun onCopyClick() {
         val token = myTokenView.text
-        val clipboard =
-            requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("token", token)
-        clipboard.setPrimaryClip(clip)
+        viewModel.copyTokenToClipboard(requireContext(), token)
         Toast.makeText(requireContext(), "$token copied", Toast.LENGTH_SHORT).show()
     }
 
