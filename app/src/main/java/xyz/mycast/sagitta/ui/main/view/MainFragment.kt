@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ class MainFragment : Fragment() {
     companion object {
         private const val TAG = "SGT/MainFragment"
         private const val PREF_NAME_CACHE = "xyz.mycast.sagitta.cache"
+        private const val URL = "https://fcm.googleapis.com/fcm/send"
 
         fun newInstance() = MainFragment()
     }
@@ -82,20 +84,12 @@ class MainFragment : Fragment() {
         val messageEdit: EditText = view.findViewById(R.id.edit_message)
         val sendButton: Button = view.findViewById(R.id.button_send)
         sendButton.setOnClickListener {
-
-            val notificationBody = JSONObject()
-            notificationBody.put("title", "단춍이")
-            notificationBody.put("body", messageEdit.text)
-            val notification = JSONObject()
-            notification.put("to", toEditText.text)
-            notification.put("priority", "high")
-            notification.put("notification", notificationBody)
-
+            val body = messageEdit.text
+            val to = toEditText.text
+            val notification = getNotification(body, to)
             val queue = Volley.newRequestQueue(context)
-            val url = "https://fcm.googleapis.com/fcm/send"
             val serverKey = BuildConfig.FCM_SERVER_KEY
-            val jsonObjectRequest = object : JsonObjectRequest(
-                url, notification,
+            val jsonObjectRequest = object : JsonObjectRequest(URL, notification,
                 {
                     Log.d(TAG, "success")
                     Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
@@ -114,6 +108,17 @@ class MainFragment : Fragment() {
             }
             queue.add(jsonObjectRequest)
         }
+    }
+
+    private fun getNotification(body: Editable, to: Editable): JSONObject {
+        val notificationBody = JSONObject()
+        notificationBody.put("title", "단춍이")
+        notificationBody.put("body", body)
+        val notification = JSONObject()
+        notification.put("to", to)
+        notification.put("priority", "high")
+        notification.put("notification", notificationBody)
+        return notification
     }
 
     override fun onStart() {
