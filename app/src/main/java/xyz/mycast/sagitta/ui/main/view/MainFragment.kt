@@ -1,4 +1,4 @@
-package xyz.mycast.sagitta.ui.main
+package xyz.mycast.sagitta.ui.main.view
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import xyz.mycast.sagitta.BuildConfig
 import xyz.mycast.sagitta.R
+import xyz.mycast.sagitta.ui.main.vm.MainViewModel
 
 class MainFragment : Fragment() {
 

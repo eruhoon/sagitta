@@ -1,4 +1,4 @@
-package xyz.mycast.sagitta.ui.main
+package xyz.mycast.sagitta.ui.main.vm
 
 import android.content.Context
 import android.util.Log

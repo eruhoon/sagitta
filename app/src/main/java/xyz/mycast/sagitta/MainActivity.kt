@@ -2,7 +2,7 @@ package xyz.mycast.sagitta
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import xyz.mycast.sagitta.ui.main.MainFragment
+import xyz.mycast.sagitta.ui.main.view.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
