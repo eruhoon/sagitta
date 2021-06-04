@@ -46,8 +46,8 @@ class SgtAppWidgetProvider : AppWidgetProvider() {
     }
 
     private fun onButtonClick(context: Context) {
-        Log.i(TAG, "buttonClicked")
         val to = PreferenceManager().loadToPref(context)
+        Log.i(TAG, "onButtonClick: to: $to")
         MessageSender().sendNotificationMessage(context, to, "이건 위젯에서 보내는 메시지")
     }
 }
