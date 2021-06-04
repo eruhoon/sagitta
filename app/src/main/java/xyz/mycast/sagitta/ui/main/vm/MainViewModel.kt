@@ -14,6 +14,11 @@ class MainViewModel : ViewModel() {
     private val myId: MutableLiveData<String> = MutableLiveData("")
     private val to: MutableLiveData<String> = MutableLiveData("")
 
+    companion object {
+        private const val PREF_NAME_CACHE = "xyz.mycast.sagitta.cache"
+        private const val PREF_KEY_TO = "to"
+    }
+
     fun getMyId(): LiveData<String> {
         return myId
     }
@@ -30,15 +35,20 @@ class MainViewModel : ViewModel() {
             }
             // Get new FCM registration token
             val token = task.result
-            myId.value = token;
+            myId.value = token
         })
     }
 
     fun loadToPref(context: Context) {
-        val cachePref = context.getSharedPreferences(
-            "xyz.mycast.sagitta.cache",
-            Context.MODE_PRIVATE
-        )
+        val cachePref = context.getSharedPreferences(PREF_NAME_CACHE, Context.MODE_PRIVATE)
         to.value = cachePref.getString("to", "")
+    }
+
+    fun saveToPref(context: Context, text: CharSequence?) {
+        val cachePref = context.getSharedPreferences(PREF_NAME_CACHE, Context.MODE_PRIVATE)
+        with(cachePref.edit()) {
+            putString(PREF_KEY_TO, text.toString())
+            apply()
+        }
     }
 }
