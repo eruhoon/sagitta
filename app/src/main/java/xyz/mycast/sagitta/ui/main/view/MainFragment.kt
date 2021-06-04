@@ -32,16 +32,13 @@ open class MainFragment : Fragment() {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getMyId().observe(this, { myTokenView.text = it })
-        viewModel.getTo().observe(this, { toEditText.setText(it) })
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.getMyId().observe(viewLifecycleOwner, { myTokenView.text = it })
+        viewModel.getTo().observe(viewLifecycleOwner, { toEditText.setText(it) })
+
         myTokenView = view.findViewById(R.id.my_token_view)
 
         val copyButton = view.findViewById<Button>(R.id.button_copy)
