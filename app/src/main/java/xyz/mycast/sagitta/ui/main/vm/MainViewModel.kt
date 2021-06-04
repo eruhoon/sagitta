@@ -1,14 +1,17 @@
 package xyz.mycast.sagitta.ui.main.vm
 
 import android.content.Context
+import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import xyz.mycast.sagitta.MainActivity
 import xyz.mycast.sagitta.ui.main.model.ClipboardHelper
+import xyz.mycast.sagitta.ui.main.view.NotificationRequest
 
 class MainViewModel : ViewModel() {
 
@@ -55,5 +58,11 @@ class MainViewModel : ViewModel() {
 
     fun copyTokenToClipboard(context: Context, token: CharSequence?) {
         ClipboardHelper().copyToClipboard(context, token)
+    }
+
+    fun sendNotificationMessage(context: Context, to: Editable, body: Editable) {
+        val queue = Volley.newRequestQueue(context)
+        val jsonObjectRequest = NotificationRequest(context, to, body)
+        queue.add(jsonObjectRequest)
     }
 }

@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.android.volley.toolbox.Volley
 import xyz.mycast.sagitta.R
 import xyz.mycast.sagitta.ui.main.vm.MainViewModel
 
@@ -70,10 +69,7 @@ open class MainFragment : Fragment() {
     private fun onSendClick() {
         val body = messageEdit.text
         val to = toEditText.text
-        val queue = Volley.newRequestQueue(context)
-        val context = requireContext()
-        val jsonObjectRequest = NotificationRequest(context, to, body)
-        queue.add(jsonObjectRequest)
+        viewModel.sendNotificationMessage(requireContext(), to, body)
     }
 
     override fun onStart() {
