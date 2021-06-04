@@ -56,6 +56,14 @@ open class MainFragment : Fragment() {
         sendButton.setOnClickListener { onSendClick() }
     }
 
+    override fun onStart() {
+        super.onStart()
+        with(viewModel) {
+            loadToken()
+            loadToPref(requireContext())
+        }
+    }
+
     private fun onCopyClick() {
         val token = myTokenView.text
         viewModel.copyTokenToClipboard(requireContext(), token)
@@ -70,14 +78,6 @@ open class MainFragment : Fragment() {
         val body = messageEdit.text
         val to = toEditText.text
         viewModel.sendNotificationMessage(requireContext(), to, body)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        with(viewModel) {
-            loadToken()
-            loadToPref(requireContext())
-        }
     }
 
 }
