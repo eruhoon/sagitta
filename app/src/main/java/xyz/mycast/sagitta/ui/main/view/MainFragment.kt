@@ -63,6 +63,9 @@ open class MainFragment : Fragment() {
         )
         val sendButton: Button = view.findViewById(R.id.button_send)
         sendButton.setOnClickListener { onSendClick() }
+
+        val presetButton: Button = view.findViewById(R.id.button_preset)
+        presetButton.setOnClickListener { onPresetClick() }
     }
 
     override fun onStart() {
@@ -95,6 +98,12 @@ open class MainFragment : Fragment() {
         val to = toEditText.text.toString()
         val title = titleEdit.text.toString()
         viewModel.sendNotificationMessage(requireContext(), to, title, body)
+    }
+
+    private fun onPresetClick() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.container, PresetListFragment())
+            .commitNow()
     }
 
     private fun onBodyTextChanged(text: CharSequence?) {

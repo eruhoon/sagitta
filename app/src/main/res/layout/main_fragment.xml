@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button_preset"
         app:layout_constraintTop_toBottomOf="@id/title_container">
 
         <TextView
@@ -107,5 +107,14 @@
             tools:layout_editor_absoluteX="172dp"
             tools:layout_editor_absoluteY="403dp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_preset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/preset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/message_container">
+        ></Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
