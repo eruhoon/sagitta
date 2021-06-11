@@ -23,6 +23,7 @@ open class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var myTokenView: TextView
     private lateinit var toEditText: EditText
+    private lateinit var titleEdit: EditText
     private lateinit var messageEdit: EditText
 
     override fun onCreateView(
@@ -38,6 +39,7 @@ open class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getMyId().observe(viewLifecycleOwner, { myTokenView.text = it })
         viewModel.getTo().observe(viewLifecycleOwner, { toEditText.setText(it) })
+        viewModel.getTitle().observe(viewLifecycleOwner, { titleEdit.setText(it) })
         viewModel.getBody().observe(viewLifecycleOwner, { messageEdit.setText(it) })
 
         myTokenView = view.findViewById(R.id.my_token_view)
@@ -48,6 +50,10 @@ open class MainFragment : Fragment() {
         toEditText = view.findViewById(R.id.to_edit)
         toEditText.addTextChangedListener(
             onTextChanged = { text, _, _, _ -> onToTextChanged(text) })
+
+        titleEdit = view.findViewById(R.id.title_edit)
+        titleEdit.addTextChangedListener(
+            onTextChanged = { text, _, _, _ -> onTitleTextChanged(text) })
 
         messageEdit = view.findViewById(R.id.edit_message)
         messageEdit.addTextChangedListener(
@@ -65,6 +71,7 @@ open class MainFragment : Fragment() {
         with(viewModel) {
             loadToken()
             loadToPref(context)
+            loadTitlePref(context)
             loadBodyPref(context)
         }
     }
@@ -79,10 +86,15 @@ open class MainFragment : Fragment() {
         viewModel.saveToPref(requireActivity(), text)
     }
 
+    private fun onTitleTextChanged(text: CharSequence?) {
+        viewModel.saveTitlePref(requireActivity(), text)
+    }
+
     private fun onSendClick() {
         val body = messageEdit.text.toString()
         val to = toEditText.text.toString()
-        viewModel.sendNotificationMessage(requireContext(), to, body)
+        val title = titleEdit.text.toString()
+        viewModel.sendNotificationMessage(requireContext(), to, title, body)
     }
 
     private fun onBodyTextChanged(text: CharSequence?) {

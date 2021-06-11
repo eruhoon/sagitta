@@ -7,11 +7,12 @@ import xyz.mycast.sagitta.BuildConfig
 
 class NotificationRequest(
     to: String,
+    title: String,
     body: String,
     listener: Response.Listener<JSONObject>,
     errorListener: Response.ErrorListener,
 ) : JsonObjectRequest(
-    URL, getNotification(body, to), listener, errorListener
+    URL, getNotification(title, body, to), listener, errorListener
 ) {
 
     companion object {
@@ -22,9 +23,9 @@ class NotificationRequest(
         private const val PARAM_KEY_CONTENT_TYPE = "Content-Type"
         private const val CONTENT_TYPE_APPLICATION_JSON = "application/json"
 
-        private fun getNotification(body: String, to: String): JSONObject {
+        private fun getNotification(title: String, body: String, to: String): JSONObject {
             val notificationBody = JSONObject()
-            notificationBody.put("title", "단춍이")
+            notificationBody.put("title", title)
             notificationBody.put("body", body)
             val notification = JSONObject()
             notification.put("to", to)

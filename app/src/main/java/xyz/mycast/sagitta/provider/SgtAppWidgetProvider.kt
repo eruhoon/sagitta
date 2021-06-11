@@ -49,9 +49,10 @@ class SgtAppWidgetProvider : AppWidgetProvider() {
     private fun onButtonClick(context: Context) {
         val preferenceManager = PreferenceManager()
         val to = preferenceManager.loadToPref(context)
+        val title = preferenceManager.loadTitlePref(context)
         val body = preferenceManager.loadBodyPref(context)
         Log.i(TAG, "onButtonClick: to: $to")
-        MessageSender().sendNotificationMessage(context, to, body, {
+        MessageSender().sendNotificationMessage(context, to, title, body, {
             Log.d(TAG, "success")
             Toast.makeText(context, "$body 전송!", Toast.LENGTH_SHORT).show()
         }, {

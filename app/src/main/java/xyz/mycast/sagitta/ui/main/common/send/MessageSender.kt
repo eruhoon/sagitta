@@ -15,12 +15,13 @@ class MessageSender {
     fun sendNotificationMessage(
         context: Context,
         to: String,
+        title: String,
         body: String,
         listener: Response.Listener<JSONObject>,
         errorListener: Response.ErrorListener,
     ) {
         val queue = Volley.newRequestQueue(context)
-        val jsonObjectRequest = NotificationRequest(to, body, listener, errorListener)
+        val jsonObjectRequest = NotificationRequest(to, title, body, listener, errorListener)
         queue.add(jsonObjectRequest)
     }
 }

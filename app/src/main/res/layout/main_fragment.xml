@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@id/message_container"
+        app:layout_constraintBottom_toTopOf="@id/title_container"
         app:layout_constraintTop_toBottomOf="@id/token_container">
 
         <TextView
@@ -55,12 +55,35 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/message_container"
+        app:layout_constraintTop_toBottomOf="@id/to_container">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/title" />
+
+        <EditText
+            android:id="@+id/title_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/message_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/to_container">
+        app:layout_constraintTop_toBottomOf="@id/title_container">
 
         <TextView
             android:layout_width="wrap_content"

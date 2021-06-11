@@ -21,6 +21,7 @@ class MainViewModel : ViewModel() {
 
     private val myId: MutableLiveData<String> = MutableLiveData("")
     private val to: MutableLiveData<String> = MutableLiveData("")
+    private val title: MutableLiveData<String> = MutableLiveData("")
     private val body: MutableLiveData<String> = MutableLiveData("")
 
     fun getMyId(): LiveData<String> {
@@ -29,6 +30,10 @@ class MainViewModel : ViewModel() {
 
     fun getTo(): LiveData<String> {
         return to
+    }
+
+    fun getTitle(): LiveData<String> {
+        return title
     }
 
     fun getBody(): LiveData<String> {
@@ -55,6 +60,14 @@ class MainViewModel : ViewModel() {
         PreferenceManager().saveToPref(context, text)
     }
 
+    fun loadTitlePref(context: Context) {
+        title.value = PreferenceManager().loadTitlePref(context)
+    }
+
+    fun saveTitlePref(context: Context, text: CharSequence?) {
+        PreferenceManager().saveTitlePref(context, text)
+    }
+
     fun loadBodyPref(context: Context) {
         body.value = PreferenceManager().loadBodyPref(context)
     }
@@ -67,8 +80,8 @@ class MainViewModel : ViewModel() {
         ClipboardHelper().copyToClipboard(context, token)
     }
 
-    fun sendNotificationMessage(context: Context, to: String, body: String) {
-        MessageSender().sendNotificationMessage(context, to, body, {
+    fun sendNotificationMessage(context: Context, to: String, title: String, body: String) {
+        MessageSender().sendNotificationMessage(context, to, title, body, {
             Log.d(TAG, "success")
             Toast.makeText(context, "전송!", Toast.LENGTH_SHORT).show()
         }, {
