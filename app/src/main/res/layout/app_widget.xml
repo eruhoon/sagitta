@@ -7,5 +7,5 @@
         android:id="@+id/button_send"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/send" />
+        android:background="@drawable/widget_background" />
 </LinearLayout>
