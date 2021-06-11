@@ -2,6 +2,7 @@ package xyz.mycast.sagitta.ui.main.vm
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,10 @@ import xyz.mycast.sagitta.ui.main.common.send.MessageSender
 import xyz.mycast.sagitta.ui.main.model.ClipboardHelper
 
 class MainViewModel : ViewModel() {
+
+    companion object {
+        private const val TAG = "SGT/MainViewModel"
+    }
 
     private val myId: MutableLiveData<String> = MutableLiveData("")
     private val to: MutableLiveData<String> = MutableLiveData("")
@@ -63,6 +68,12 @@ class MainViewModel : ViewModel() {
     }
 
     fun sendNotificationMessage(context: Context, to: String, body: String) {
-        MessageSender().sendNotificationMessage(context, to, body)
+        MessageSender().sendNotificationMessage(context, to, body, {
+            Log.d(TAG, "success")
+            Toast.makeText(context, "전송!", Toast.LENGTH_SHORT).show()
+        }, {
+            Log.e(TAG, "failed")
+            Toast.makeText(context, "전송 실패 ㅠㅠ", Toast.LENGTH_SHORT).show()
+        })
     }
 }

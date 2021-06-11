@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.RemoteViews
+import android.widget.Toast
 import xyz.mycast.sagitta.R
 import xyz.mycast.sagitta.ui.main.common.preference.PreferenceManager
 import xyz.mycast.sagitta.ui.main.common.send.MessageSender
@@ -50,6 +51,12 @@ class SgtAppWidgetProvider : AppWidgetProvider() {
         val to = preferenceManager.loadToPref(context)
         val body = preferenceManager.loadBodyPref(context)
         Log.i(TAG, "onButtonClick: to: $to")
-        MessageSender().sendNotificationMessage(context, to, body)
+        MessageSender().sendNotificationMessage(context, to, body, {
+            Log.d(TAG, "success")
+            Toast.makeText(context, "$body 전송!", Toast.LENGTH_SHORT).show()
+        }, {
+            Log.e(TAG, "failed")
+            Toast.makeText(context, "전송 실패 ㅠㅠ", Toast.LENGTH_SHORT).show()
+        })
     }
 }
