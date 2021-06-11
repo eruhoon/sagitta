@@ -1,26 +1,20 @@
 package xyz.mycast.sagitta.ui.main.view
 
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
 import xyz.mycast.sagitta.BuildConfig
 
-class NotificationRequest(context: Context, to: String, body: String) : JsonObjectRequest(
-    URL, getNotification(body, to),
-    {
-        Log.d(TAG, "success")
-        Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
-    },
-    {
-        Log.e(TAG, "failed")
-        Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show()
-    }
+class NotificationRequest(
+    to: String,
+    body: String,
+    listener: Response.Listener<JSONObject>,
+    errorListener: Response.ErrorListener,
+) : JsonObjectRequest(
+    URL, getNotification(body, to), listener, errorListener
 ) {
 
     companion object {
-        private const val TAG = "SGT/NotificationRequest"
         private const val URL = "https://fcm.googleapis.com/fcm/send"
         private const val SERVER_KEY = BuildConfig.FCM_SERVER_KEY
 
