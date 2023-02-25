@@ -5,6 +5,9 @@ plugins {
     id 'com.google.secrets_gradle_plugin' version '0.5'
 }
 
+def props = new Properties()
+props.load(new FileInputStream(project.file('local.properties')))
+
 android {
     compileSdkVersion 33
     buildToolsVersion '31.0.0'
@@ -25,7 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField("String", "FCM_SERVER_KEY", '"AAAAl0tdWVI:APA91bH-24yrx0zJ85vWdyUsseOJc9py8LEKUqfmziKDBzm8__Jy3X_rxH6_fuUbWFSj7rtJy5jJoR1DlwQCHD5_HtlrTunFBjHeeu7X7Bk0Wj8zLnUYrHU_L-M7FYOgeDKLjpBP8dkq"')
+            buildConfigField("String", "FCM_SERVER_KEY",  props.getProperty('FCM_SERVER_KEY'))
         }
     }
     compileOptions {
