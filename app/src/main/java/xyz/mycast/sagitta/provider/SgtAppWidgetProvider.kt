@@ -1,6 +1,7 @@
 package xyz.mycast.sagitta.provider
 
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -30,7 +31,7 @@ class SgtAppWidgetProvider : AppWidgetProvider() {
         if (context !== null) {
             val remoteViews = RemoteViews(context.packageName, R.layout.app_widget)
             val intent = Intent(context, SgtAppWidgetProvider::class.java).setAction(ACTION_BTN)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE)
             remoteViews.setOnClickPendingIntent(R.id.button_send, pendingIntent)
 
             appWidgetManager?.updateAppWidget(appWidgetIds, remoteViews)
