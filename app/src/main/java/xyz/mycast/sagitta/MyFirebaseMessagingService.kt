@@ -14,15 +14,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "Refreshed token: $token")
-        //
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: ${remoteMessage.from}")
 
-        if(remoteMessage.data.isNotEmpty()) {
+        if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
-
         }
 
         Log.d(TAG, "Message Notification Body: ${remoteMessage.notification?.body}")
